@@ -2,8 +2,8 @@
 // source: GeoData.proto
 package com.bielu.oshift.service.protobuf;
 
-public final class GeoDataOuterClass {
-  private GeoDataOuterClass() {}
+public final class GeoDataProto {
+  private GeoDataProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
@@ -115,7 +115,6 @@ public final class GeoDataOuterClass {
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       initFields();
-      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -177,14 +176,14 @@ public final class GeoDataOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return GeoDataOuterClass.internal_static_GeoData_descriptor;
+      return GeoDataProto.internal_static_GeoData_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return GeoDataOuterClass.internal_static_GeoData_fieldAccessorTable
+      return GeoDataProto.internal_static_GeoData_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              GeoDataOuterClass.GeoData.class, GeoDataOuterClass.GeoData.Builder.class);
+              GeoDataProto.GeoData.class, GeoDataProto.GeoData.Builder.class);
     }
 
     public static com.google.protobuf.Parser<GeoData> PARSER =
@@ -489,53 +488,53 @@ public final class GeoDataOuterClass {
       return super.writeReplace();
     }
 
-    public static GeoDataOuterClass.GeoData parseFrom(
+    public static GeoDataProto.GeoData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(
+    public static GeoDataProto.GeoData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(byte[] data)
+    public static GeoDataProto.GeoData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(
+    public static GeoDataProto.GeoData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(java.io.InputStream input)
+    public static GeoDataProto.GeoData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(
+    public static GeoDataProto.GeoData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static GeoDataOuterClass.GeoData parseDelimitedFrom(java.io.InputStream input)
+    public static GeoDataProto.GeoData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static GeoDataOuterClass.GeoData parseDelimitedFrom(
+    public static GeoDataProto.GeoData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(
+    public static GeoDataProto.GeoData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static GeoDataOuterClass.GeoData parseFrom(
+    public static GeoDataProto.GeoData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -544,7 +543,7 @@ public final class GeoDataOuterClass {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(GeoDataOuterClass.GeoData prototype) {
+    public static Builder newBuilder(GeoDataProto.GeoData prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -561,17 +560,17 @@ public final class GeoDataOuterClass {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:GeoData)
-        GeoDataOuterClass.GeoDataOrBuilder {
+        GeoDataProto.GeoDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return GeoDataOuterClass.internal_static_GeoData_descriptor;
+        return GeoDataProto.internal_static_GeoData_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return GeoDataOuterClass.internal_static_GeoData_fieldAccessorTable
+        return GeoDataProto.internal_static_GeoData_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                GeoDataOuterClass.GeoData.class, GeoDataOuterClass.GeoData.Builder.class);
+                GeoDataProto.GeoData.class, GeoDataProto.GeoData.Builder.class);
       }
 
       // Construct using GeoDataOuterClass.GeoData.newBuilder()
@@ -613,23 +612,23 @@ public final class GeoDataOuterClass {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return GeoDataOuterClass.internal_static_GeoData_descriptor;
+        return GeoDataProto.internal_static_GeoData_descriptor;
       }
 
-      public GeoDataOuterClass.GeoData getDefaultInstanceForType() {
-        return GeoDataOuterClass.GeoData.getDefaultInstance();
+      public GeoDataProto.GeoData getDefaultInstanceForType() {
+        return GeoDataProto.GeoData.getDefaultInstance();
       }
 
-      public GeoDataOuterClass.GeoData build() {
-        GeoDataOuterClass.GeoData result = buildPartial();
+      public GeoDataProto.GeoData build() {
+        GeoDataProto.GeoData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public GeoDataOuterClass.GeoData buildPartial() {
-        GeoDataOuterClass.GeoData result = new GeoDataOuterClass.GeoData(this);
+      public GeoDataProto.GeoData buildPartial() {
+        GeoDataProto.GeoData result = new GeoDataProto.GeoData(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -658,16 +657,16 @@ public final class GeoDataOuterClass {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof GeoDataOuterClass.GeoData) {
-          return mergeFrom((GeoDataOuterClass.GeoData)other);
+        if (other instanceof GeoDataProto.GeoData) {
+          return mergeFrom((GeoDataProto.GeoData)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(GeoDataOuterClass.GeoData other) {
-        if (other == GeoDataOuterClass.GeoData.getDefaultInstance()) return this;
+      public Builder mergeFrom(GeoDataProto.GeoData other) {
+        if (other == GeoDataProto.GeoData.getDefaultInstance()) return this;
         if (other.hasLatitude()) {
           bitField0_ |= 0x00000001;
           latitude_ = other.latitude_;
@@ -705,11 +704,11 @@ public final class GeoDataOuterClass {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        GeoDataOuterClass.GeoData parsedMessage = null;
+        GeoDataProto.GeoData parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (GeoDataOuterClass.GeoData) e.getUnfinishedMessage();
+          parsedMessage = (GeoDataProto.GeoData) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {

@@ -3,11 +3,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>jbosswildfly</groupId>
-  <artifactId>jbosswildfly</artifactId>
+  <groupId>com.bielu</groupId>
+  <artifactId>openshift-playground</artifactId>
   <packaging>war</packaging>
   <version>1.0</version>
-  <name>jbosswildfly</name>
+  <name>openshift</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -49,7 +49,7 @@
       <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
       <id>openshift</id>
       <build>
-        <finalName>jbosswildfly</finalName>
+        <finalName>openshift</finalName>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>

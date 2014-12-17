@@ -12,7 +12,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import com.bielu.oshift.service.protobuf.GeoDataOuterClass;
+import com.bielu.oshift.service.protobuf.GeoDataProto;
 
 @Provider
 @Produces("application/x-protobuf")
@@ -33,7 +33,7 @@ public class GeoDataProtobufWriter implements MessageBodyWriter<GeoData> {
       MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException,
       WebApplicationException {
 
-    GeoDataOuterClass.GeoData.newBuilder()
+    GeoDataProto.GeoData.newBuilder()
       .setCity(t.getCity())
       .setCountry(t.getCountry())
       //.setCountryCode(t.getCounrtyCode())
