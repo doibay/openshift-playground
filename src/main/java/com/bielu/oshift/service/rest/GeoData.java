@@ -12,8 +12,9 @@ public class GeoData {
   private String latitude = "";
   private String longitude = "";
   private String country = "";
-  private String countryCode;
+  private String countryCode = "";
   private String city = "";
+  private String ip = "";
 
   @XmlAttribute
   public String getLatitude() {
@@ -40,21 +41,15 @@ public class GeoData {
 
   public void setCountry(String country) {
     this.country = country;
-    if (country != null) {
-      int leftIdx = country.indexOf("(");
-      int rightIdx = country.indexOf(")");
-      if (leftIdx > -1 && leftIdx < rightIdx) {
-        countryCode = country.substring(leftIdx + 1, rightIdx);
-        if (countryCode.length() != 2) {
-          countryCode = null;
-        }
-      }
-    }
   }
 
   @XmlAttribute
   public String getCounrtyCode() {
     return countryCode;
+  }
+  
+  public void setCountryCode(String countryCode) {
+    this.countryCode = countryCode;
   }
 
   @XmlAttribute
@@ -64,5 +59,14 @@ public class GeoData {
 
   public void setCity(String city) {
     this.city = city;
+  }
+  
+  @XmlAttribute
+  public String getIp() {
+    return ip;
+  }
+  
+  public void setIp(String ip) {
+    this.ip = ip;
   }
 }
