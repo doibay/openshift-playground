@@ -6,17 +6,22 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class GeoData {
 
-  private String latitude = "";
-  private String longitude = "";
-  private String country = "";
-  private String countryCode = "";
-  private String city = "";
-  private String ip = "";
-
   @XmlAttribute
+  String latitude = "";
+  @XmlAttribute
+  String longitude = "";
+  @XmlAttribute
+  String country = "";
+  @XmlAttribute
+  String countryCode = "";
+  @XmlAttribute
+  String city = "";
+  @XmlAttribute
+  String ip = "";
+
   public String getLatitude() {
     return latitude;
   }
@@ -25,7 +30,6 @@ public class GeoData {
     this.latitude = latitude;
   }
 
-  @XmlAttribute
   public String getLongitude() {
     return longitude;
   }
@@ -34,7 +38,6 @@ public class GeoData {
     this.longitude = longitude;
   }
 
-  @XmlAttribute
   public String getCountry() {
     return country;
   }
@@ -43,7 +46,6 @@ public class GeoData {
     this.country = country;
   }
 
-  @XmlAttribute
   public String getCounrtyCode() {
     return countryCode;
   }
@@ -52,7 +54,6 @@ public class GeoData {
     this.countryCode = countryCode;
   }
 
-  @XmlAttribute
   public String getCity() {
     return city;
   }
@@ -61,7 +62,6 @@ public class GeoData {
     this.city = city;
   }
   
-  @XmlAttribute
   public String getIp() {
     return ip;
   }
