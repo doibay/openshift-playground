@@ -15,7 +15,7 @@ public class RegistrationService {
   static RandomAccessFile regFile;
   
   static {
-    String filename = System.getProperty("user.home") + System.getProperty("file.separator") + "regids.txt";
+    String filename = System.getProperty("user.dir") + System.getProperty("file.separator") + "regids.txt";
     try {
       regFile = new RandomAccessFile(filename, "rw");
       String line = null;
