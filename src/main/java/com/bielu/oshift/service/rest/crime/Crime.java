@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest;
+package com.bielu.oshift.service.rest.crime;
 
 import java.util.Date;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest;
+package com.bielu.oshift.service.rest.crime;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;

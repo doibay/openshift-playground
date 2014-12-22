@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest;
+package com.bielu.oshift.service.rest.geo;
 
 import java.io.IOException;
 import java.io.OutputStream;

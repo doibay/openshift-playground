@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest;
+package com.bielu.oshift.service.rest.geo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
