@@ -37,6 +37,7 @@ public class GeoIpService {
     JsonReader reader = JsonProvider.provider().createReader(response.readEntity(InputStream.class));
 
     JsonObject jsonObj = reader.readObject();
+    reader.close();
     GeoData data = new GeoData();
     data.country = jsonObj.getString("country_name");
     data.countryCode = jsonObj.getString("country_code");
