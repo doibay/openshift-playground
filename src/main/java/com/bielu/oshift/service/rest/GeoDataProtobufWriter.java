@@ -34,11 +34,11 @@ public class GeoDataProtobufWriter implements MessageBodyWriter<GeoData> {
       WebApplicationException {
 
     GeoDataProto.GeoData.newBuilder()
-      .setCity(t.getCity())
-      .setCountry(t.getCountry())
+      .setCity(t.city)
+      .setCountry(t.country)
       //.setCountryCode(t.getCounrtyCode())
-      .setLatitude(t.getLatitude())
-      .setLongitude(t.getLongitude())
+      .setLatitude(t.latitude)
+      .setLongitude(t.longitude)
       .build().writeTo(entityStream);
   }
   

@@ -1,17 +1,18 @@
 package com.bielu.oshift.service.rest;
 
+import java.util.Date;
+import java.util.UUID;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class GeoData {
+public class Crime {
 
-  String latitude;
-  String longitude;
-  String country;
-  String countryCode;
-  String city;
-  String ip;
+  UUID id;
+  String title;
+  Boolean solved;
+  Date date;
 }

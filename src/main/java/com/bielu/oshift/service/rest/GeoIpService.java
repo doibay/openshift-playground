@@ -38,16 +38,16 @@ public class GeoIpService {
 
     JsonObject jsonObj = reader.readObject();
     GeoData data = new GeoData();
-    data.setCountry(jsonObj.getString("country_name"));
-    data.setCountryCode(jsonObj.getString("country_code"));
-    data.setCity(jsonObj.getString("city"));
-    data.setIp(jsonObj.getString("ip"));
+    data.country = jsonObj.getString("country_name");
+    data.countryCode = jsonObj.getString("country_code");
+    data.city = jsonObj.getString("city");
+    data.ip = jsonObj.getString("ip");
     if (jsonObj.isNull("lat") == false) {
-      data.setLatitude(jsonObj.getString("lat"));
+      data.latitude = jsonObj.getString("lat");
     }
 
     if (jsonObj.isNull("lng") == false) {
-      data.setLongitude(jsonObj.getString("lng"));
+      data.longitude = jsonObj.getString("lng");
     }
     return data;
   }
