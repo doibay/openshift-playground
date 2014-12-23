@@ -1,8 +1,9 @@
 package com.bielu.oshift.service.rest.crime;
 
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +40,11 @@ public class CrimeService {
         Crime crime = new Crime();
         crime.id = UUID.fromString(res.get("id").toString());
         crime.title = res.get("title").toString();
-        crime.date = new Date((long) res.get("date"));
+        try {
+          crime.date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(res.get("date").toString());
+        } catch (ParseException e) {
+          // ignore (?)
+        }
         crime.solved = (Boolean) res.get("solved");
         list.add(crime);
       }
