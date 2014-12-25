@@ -76,7 +76,12 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-servlet-initializer</artifactId>
+            <version>3.0.9.Final</version>
+        </dependency>
+		</dependencies>
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
