@@ -36,6 +36,30 @@
 		<maven.compiler.target>1.7</maven.compiler.target>
 	</properties>
 	<dependencies>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>2.6.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-fastinfoset-provider</artifactId>
+      <version>3.0.6.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>2.10.1</version>
+    </dependency>	
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
