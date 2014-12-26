@@ -30,7 +30,7 @@ public class CrimeService {
                 + getenv("OPENSHIFT_MONGODB_DB_USER", "admin")
                 + ":"
                 + getenv("OPENSHIFT_MONGODB_DB_PASS")
-        + "@"
+                + "@"
                 + getenv("OPENSHIFT_MONGODB_DB_HOST", "localhost") 
                 + ":" + getenv("OPENSHIFT_MONGODB_DB_PORT", "27017")));
     
