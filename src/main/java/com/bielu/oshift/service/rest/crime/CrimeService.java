@@ -27,10 +27,14 @@ public class CrimeService {
     MongoClient mongo = new MongoClient(
         new MongoClientURI(
             "mongodb://" 
+                + getenv("OPENSHIFT_MONGODB_DB_USER", "admin")
+                + ":"
+                + getenv("OPENSHIFT_MONGODB_DB_PASS")
+                + "@"
                 + getenv("OPENSHIFT_MONGODB_DB_HOST", "localhost") 
                 + ":" + getenv("OPENSHIFT_MONGODB_DB_PORT", "27017")));
     
-    collection = mongo.getDB("playground").getCollection("crimes");
+    collection = mongo.getDB(getenv("OPENSHIFT_MONGODB_DB_NAME", "playground")).getCollection("crimes");
   }
 
   @GET
@@ -71,10 +75,10 @@ public class CrimeService {
     return crime;
   }
   
-  static String getenv(String variable, String defaultValue) {
+  static String getenv(String variable, String... defaultValue) {
     String result = System.getenv(variable);
-    if (result == null) {
-      return defaultValue;
+    if (result == null && defaultValue.length == 1) {
+      return defaultValue[0];
     }
     
     return result;
