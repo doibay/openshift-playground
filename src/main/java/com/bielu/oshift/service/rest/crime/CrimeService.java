@@ -30,7 +30,7 @@ public class CrimeService {
                 + getenv("OPENSHIFT_MONGODB_DB_HOST", "localhost") 
                 + ":" + getenv("OPENSHIFT_MONGODB_DB_PORT", "27017")));
     
-    collection = mongo.getDB("playground").getCollection("crimes");
+    collection = mongo.getDB("tomcat").getCollection("crimes");
   }
 
   @GET
