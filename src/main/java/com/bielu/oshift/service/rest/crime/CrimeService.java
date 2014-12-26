@@ -26,7 +26,10 @@ public class CrimeService {
   public CrimeService() throws UnknownHostException {
     MongoClient mongo = new MongoClient(
         new MongoClientURI(
-            "mongodb://admin:VbNgJPMMtXtF@" 
+            "mongodb://" 
+                + getenv("OPENSHIFT_MONGODB_DB_USER", "admin")
+                + ":"
+                + getenv("OPENSHIFT_MONGODB_DB_PASS") 
                 + getenv("OPENSHIFT_MONGODB_DB_HOST", "localhost") 
                 + ":" + getenv("OPENSHIFT_MONGODB_DB_PORT", "27017")));
     
