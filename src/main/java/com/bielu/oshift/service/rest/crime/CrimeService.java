@@ -74,10 +74,10 @@ public class CrimeService {
     return crime;
   }
   
-  static String getenv(String variable, String defaultValue) {
+  static String getenv(String variable, String... defaultValue) {
     String result = System.getenv(variable);
-    if (result == null) {
-      return defaultValue;
+    if (result == null && defaultValue.length == 1) {
+      return defaultValue[0];
     }
     
     return result;
