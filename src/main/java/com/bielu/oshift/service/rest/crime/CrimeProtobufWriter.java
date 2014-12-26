@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import javax.ws.rs.Produces;
@@ -20,6 +21,8 @@ import com.bielu.oshift.service.protobuf.CrimesProto.CrimeList.Builder;
 @Provider
 @Produces("application/x-protobuf")
 public class CrimeProtobufWriter implements MessageBodyWriter<Object> {
+  
+  private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
   
   @Override
   public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
@@ -72,7 +75,7 @@ public class CrimeProtobufWriter implements MessageBodyWriter<Object> {
   
   CrimesProto.CrimeList.Crime buildCrime(Crime crime) {
     return CrimesProto.CrimeList.Crime.newBuilder()
-    .setDate(crime.date.toString())
+    .setDate(format.format(crime.date))
     .setSolved(crime.solved)
     .setTitle(crime.title)
     .setUuid(crime.id.toString())
