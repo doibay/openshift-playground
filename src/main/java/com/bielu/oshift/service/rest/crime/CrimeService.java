@@ -9,7 +9,9 @@ import java.util.UUID;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -32,25 +34,41 @@ public class CrimeService {
   }
 
   @GET
+  @Path("{id}")
+  public Crime getCrime(@PathParam("id") String id) {
+    try (DBCursor cursor = collection.find(new BasicDBObject("id", id))) {
+      if (cursor.hasNext()) {
+        return buildCrime(cursor.next());
+      }
+    }
+    
+    return null;
+  }
+  
+  @GET
   public List<Crime> getCrimeList() {
     List<Crime> list = new ArrayList<>();
     try (DBCursor cursor = collection.find()) {
       while (cursor.hasNext()) {
         DBObject res = cursor.next();
-        Crime crime = new Crime();
-        crime.id = UUID.fromString(res.get("id").toString());
-        crime.title = res.get("title").toString();
-        try {
-          crime.date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(res.get("date").toString());
-        } catch (ParseException e) {
-          // ignore (?)
-        }
-        crime.solved = (Boolean) res.get("solved");
-        list.add(crime);
+        list.add(buildCrime(res));
       }
     }
     
     return list;
+  }
+
+  Crime buildCrime(DBObject res) {
+    Crime crime = new Crime();
+    crime.id = UUID.fromString(res.get("id").toString());
+    crime.title = res.get("title").toString();
+    try {
+      crime.date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(res.get("date").toString());
+    } catch (ParseException e) {
+      // ignore (?)
+    }
+    crime.solved = (Boolean) res.get("solved");
+    return crime;
   }
   
   static String getenv(String variable, String defaultValue) {
