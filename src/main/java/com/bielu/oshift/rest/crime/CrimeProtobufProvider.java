@@ -1,6 +1,7 @@
-package com.bielu.oshift.service.rest.crime;
+package com.bielu.oshift.rest.crime;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -8,19 +9,22 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.ext.MessageBodyReader;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 
-import com.bielu.oshift.service.protobuf.CrimesProto;
-import com.bielu.oshift.service.protobuf.CrimesProto.CrimeList.Builder;
+import com.bielu.oshift.protobuf.CrimesProto;
+import com.bielu.oshift.protobuf.CrimesProto.CrimeList.Builder;
 
 @Provider
 @Produces("application/x-protobuf")
-public class CrimeProtobufWriter implements MessageBodyWriter<Object> {
+@Consumes("application/x-protobuf")
+public class CrimeProtobufProvider implements MessageBodyWriter<Object>, MessageBodyReader<Object> {
   
   private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
   
@@ -44,6 +48,18 @@ public class CrimeProtobufWriter implements MessageBodyWriter<Object> {
     return false;
   }
 
+  @Override
+  public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    return isWriteable(type, genericType, annotations, mediaType);
+  }
+
+  @Override
+  public Object readFrom(Class<Object> type, Type genericType, Annotation[] annotations, MediaType mediaType,
+      MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
+    
+    return new Crime();
+  }
+  
   @Override
   public long getSize(Object t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
     return -1;

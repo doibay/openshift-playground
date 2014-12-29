@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest.crime;
+package com.bielu.oshift.rest.crime;
 
 import java.net.UnknownHostException;
 import java.text.ParseException;
@@ -8,33 +8,39 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
+import com.bielu.oshift.Utils;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.MongoException;
+import com.mongodb.WriteResult;
 
 @Path("crime")
 public class CrimeService {
   
   DBCollection collection;
+  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
   public CrimeService() throws UnknownHostException {
     MongoClient mongo = new MongoClient(
         new MongoClientURI(
             "mongodb://" 
-                + getenv("OPENSHIFT_MONGODB_DB_USER", "admin")
+                + Utils.getenv("OPENSHIFT_MONGODB_DB_USER", "admin")
                 + ":"
-                + getenv("OPENSHIFT_MONGODB_DB_PASS")
+                + Utils.getenv("OPENSHIFT_MONGODB_DB_PASS")
                 + "@"
-                + getenv("OPENSHIFT_MONGODB_DB_HOST", "localhost") 
-                + ":" + getenv("OPENSHIFT_MONGODB_DB_PORT", "27017")));
+                + Utils.getenv("OPENSHIFT_MONGODB_DB_HOST", "localhost") 
+                + ":" 
+                + Utils.getenv("OPENSHIFT_MONGODB_DB_PORT", "27017")));
     
-    collection = mongo.getDB(getenv("OPENSHIFT_MONGODB_DB_NAME", "playground")).getCollection("crimes");
+    collection = mongo.getDB(Utils.getenv("OPENSHIFT_MONGODB_DB_NAME", "playground")).getCollection("crimes");
   }
 
   @GET
@@ -47,6 +53,26 @@ public class CrimeService {
     }
     
     return null;
+  }
+  
+  @POST
+  public CrimeServiceStatus addCrime(Crime crime) {
+    try {
+      try (DBCursor cursor = collection.find(new BasicDBObject("id", crime.id))) {
+        if (cursor.hasNext()) {
+          return new CrimeServiceStatus("add", "error", "Crime with given UUID already exists");
+        }
+      }
+      
+      WriteResult result = collection.insert(new BasicDBObject("id", crime.id)
+          .append("title", crime.title)
+          .append("date", dateFormat.format(crime.date))
+          .append("solved", crime.solved));
+      
+      return new CrimeServiceStatus("add", "success", result.toString());
+    } catch (MongoException e) {
+      return new CrimeServiceStatus("add", "error", e.toString());
+    }
   }
   
   @GET
@@ -67,20 +93,11 @@ public class CrimeService {
     crime.id = UUID.fromString(res.get("id").toString());
     crime.title = res.get("title").toString();
     try {
-      crime.date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(res.get("date").toString());
+      crime.date = dateFormat.parse(res.get("date").toString());
     } catch (ParseException e) {
       // ignore (?)
     }
     crime.solved = (Boolean) res.get("solved");
     return crime;
-  }
-  
-  static String getenv(String variable, String... defaultValue) {
-    String result = System.getenv(variable);
-    if (result == null && defaultValue.length == 1) {
-      return defaultValue[0];
-    }
-    
-    return result;
   }
 }

@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest.registration;
+package com.bielu.oshift.rest.registration;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
