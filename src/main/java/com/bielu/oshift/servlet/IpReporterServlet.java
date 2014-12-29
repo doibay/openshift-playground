@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.servlet;
+package com.bielu.oshift.servlet;
 
 import java.io.IOException;
 

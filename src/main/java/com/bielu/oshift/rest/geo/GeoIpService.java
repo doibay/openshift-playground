@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest.geo;
+package com.bielu.oshift.rest.geo;
 
 import java.io.InputStream;
 
