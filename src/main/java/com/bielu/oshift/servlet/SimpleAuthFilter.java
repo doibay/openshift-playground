@@ -30,11 +30,8 @@ public class SimpleAuthFilter implements Filter {
   public SimpleAuthFilter() throws ServletException {
     allowUnsecureAccess = Boolean.parseBoolean(Utils.getenv("OPENSHIFT_ALLOW_UNSECURE_ACCESS", "false"));
     allowAnonymousAccess = Boolean.parseBoolean(Utils.getenv("OPENSHIFT_ALLOW_ANONYMOUS_ACCESS", "false"));
-    user = Utils.getenv("OPENSHIFT_HTTP_USER", 
-        "xakJwSTdj65uByg/BBcRu4ACfLwHOoSdFRbwAfduUzQ="); // SHA-256 + Base64
-    
-    pass = Utils.getenv("OPENSHIFT_HTTP_PASS", 
-        "uQRM1l3GrjaQl8WTYwgXU4CaiPlZ6w0vr4WEGV/sZPY="); // SHA-256 + Base64
+    user = Utils.getenv("OPENSHIFT_HTTP_USER", "xakJwSTdj65uByg/BBcRu4ACfLwHOoSdFRbwAfduUzQ="); // SHA-256 + Base64
+    pass = Utils.getenv("OPENSHIFT_HTTP_PASS", "uQRM1l3GrjaQl8WTYwgXU4CaiPlZ6w0vr4WEGV/sZPY="); // SHA-256 + Base64
     try {
       digest = MessageDigest.getInstance("SHA-256");
     } catch (NoSuchAlgorithmException e) {
@@ -70,9 +67,15 @@ public class SimpleAuthFilter implements Filter {
   
   private boolean verifyUserAndPass(HttpServletRequest req) {
     String usr = req.getHeader("X-Http-User");
-    usr = usr != null ? usr : ""; // avoid NPE
+    if (usr == null) {
+      return false;
+    }
+    
     String pwd = req.getHeader("X-Http-Pass");
-    pwd = pwd != null ? pwd : ""; // avoid NPE
+    if (pwd == null) {
+      return false;
+    }
+    
     return user.equals(Base64.encodeBytes(digest.digest(usr.getBytes()))) 
         && pass.equals(Base64.encodeBytes(digest.digest(pwd.getBytes())));
   }

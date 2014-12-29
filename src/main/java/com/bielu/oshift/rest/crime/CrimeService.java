@@ -11,6 +11,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.bielu.oshift.Utils;
 import com.mongodb.BasicDBObject;
@@ -56,11 +58,13 @@ public class CrimeService {
   }
   
   @POST
-  public CrimeServiceStatus addCrime(Crime crime) {
+  public Response addCrime(Crime crime) {
     try {
       try (DBCursor cursor = collection.find(new BasicDBObject("id", crime.id))) {
         if (cursor.hasNext()) {
-          return new CrimeServiceStatus("add", "error", "Crime with given UUID already exists");
+          return Response.status(Status.CONFLICT)
+              .entity(new CrimeServiceStatus("add", "error", "Crime with given UUID already exists"))
+              .build();
         }
       }
       
@@ -69,9 +73,16 @@ public class CrimeService {
           .append("date", dateFormat.format(crime.date))
           .append("solved", crime.solved));
       
-      return new CrimeServiceStatus("add", "success", result.toString());
+      if (result.getError() != null) {
+        return Response.status(Status.INTERNAL_SERVER_ERROR)
+            .entity(new CrimeServiceStatus("add", "error", result.getError()))
+            .build();
+      }
+      return Response.ok(new CrimeServiceStatus("add", "success", crime.id.toString())).build();
     } catch (MongoException e) {
-      return new CrimeServiceStatus("add", "error", e.toString());
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+          .entity(new CrimeServiceStatus("add", "error", e.toString()))
+          .build();
     }
   }
   
