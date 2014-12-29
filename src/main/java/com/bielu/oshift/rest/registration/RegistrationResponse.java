@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest.registration;
+package com.bielu.oshift.rest.registration;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -1,18 +1,14 @@
-package com.bielu.oshift.service.rest.crime;
-
-import java.util.Date;
-import java.util.UUID;
+package com.bielu.oshift.rest.registration;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Crime {
+public class RegistrationRequest {
 
-  UUID id;
-  String title;
-  Boolean solved;
-  Date date;
+  @XmlAttribute(name = "registration_id")
+  String registrationId;
 }

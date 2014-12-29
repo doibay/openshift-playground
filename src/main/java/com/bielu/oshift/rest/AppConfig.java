@@ -1,4 +1,4 @@
-package com.bielu.oshift.service.rest;
+package com.bielu.oshift.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
