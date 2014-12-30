@@ -61,9 +61,9 @@ public class SimpleAuthFilter implements Filter {
     if (allowAnonymousAccess || verifyUserAndPass(req)) {
       chain.doFilter(req, resp);
     } else {
-        resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-      }
+      resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Request must be authenticated with username and password");
     }
+  }
   
   private boolean verifyUserAndPass(HttpServletRequest req) {
     String usr = req.getHeader("X-Http-User");
