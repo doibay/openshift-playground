@@ -1,14 +1,13 @@
 package com.bielu.oshift.rest.crime;
 
 import java.net.UnknownHostException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
@@ -28,7 +27,6 @@ import com.mongodb.WriteResult;
 public class CrimeService {
   
   DBCollection collection;
-  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
   public CrimeService() throws UnknownHostException {
     MongoClient mongo = new MongoClient(
@@ -48,42 +46,91 @@ public class CrimeService {
   @GET
   @Path("{id}")
   public Crime getCrime(@PathParam("id") String id) {
-    try (DBCursor cursor = collection.find(new BasicDBObject("id", id))) {
+    try (DBCursor cursor = collection.find(new BasicDBObject(Crime.ID, id))) {
       if (cursor.hasNext()) {
-        return buildCrime(cursor.next());
+        return Crime.fromDBObject(cursor.next());
       }
     }
     
     return null;
   }
+
+  @DELETE
+  @Path("{id}")
+  public Response deleteCrime(@PathParam("id") String id) {
+    try (DBCursor cursor = collection.find(new BasicDBObject(Crime.ID, id))) {
+      if (cursor.hasNext() == false) {
+        return notFound("delete", id);
+      }
+      
+      WriteResult result = collection.remove(new BasicDBObject(Crime.ID, id));
+      if (result.getError() != null) {
+        return error("delete", result.getError());
+      }
+      
+      return Response
+          .ok(new CrimeServiceStatus("delete", "success", "Crime has been deleted"))
+          .build();
+    } catch (MongoException e) {
+      return error("delete", e.toString());
+    }
+  }
   
   @POST
-  public Response addCrime(Crime crime) {
-    try {
-      try (DBCursor cursor = collection.find(new BasicDBObject("id", crime.id))) {
-        if (cursor.hasNext()) {
-          return Response.status(Status.CONFLICT)
-              .entity(new CrimeServiceStatus("add", "error", "Crime with given UUID already exists"))
-              .build();
-        }
+  public Response updateCrime(Crime crime) {
+    try (DBCursor cursor = collection.find(new BasicDBObject(Crime.ID, crime.id.toString()))) {
+      if (cursor.hasNext() == false) {
+        return notFound("update", crime.id.toString());
       }
       
-      WriteResult result = collection.insert(new BasicDBObject("id", crime.id)
-          .append("title", crime.title)
-          .append("date", dateFormat.format(crime.date))
-          .append("solved", crime.solved));
-      
+      DBObject query = cursor.next();
+      DBObject updated = Crime.fromCrime(crime);
+      WriteResult result = collection.update(query, updated);
       if (result.getError() != null) {
-        return Response.status(Status.INTERNAL_SERVER_ERROR)
-            .entity(new CrimeServiceStatus("add", "error", result.getError()))
+        return error("update", result.getError());
+      }
+      
+      return Response
+          .ok(new CrimeServiceStatus("update", "success", crime.id.toString()))
+          .build();
+      
+    } catch (MongoException e) {
+      return error("update", e.toString());
+    }
+  }
+
+  @PUT
+  public Response addCrime(Crime crime) {
+    try (DBCursor cursor = collection.find(new BasicDBObject(Crime.ID, crime.id.toString()))) {
+      if (cursor.hasNext()) {
+        return Response.status(Status.CONFLICT)
+            .entity(new CrimeServiceStatus("add", "error", "Crime with given UUID already exists"))
             .build();
       }
-      return Response.ok(new CrimeServiceStatus("add", "success", crime.id.toString())).build();
-    } catch (MongoException e) {
-      return Response.status(Status.INTERNAL_SERVER_ERROR)
-          .entity(new CrimeServiceStatus("add", "error", e.toString()))
+
+      WriteResult result = collection.insert(Crime.fromCrime(crime));
+      if (result.getError() != null) {
+        return error("add", result.getError());
+      }
+      
+      return Response.status(Status.CREATED)
+          .entity(new CrimeServiceStatus("add", "success", crime.id.toString()))
           .build();
+    } catch (MongoException e) {
+      return error("add", e.toString());
     }
+  }
+  
+  private Response notFound(String operation, String uuid) {
+    return Response.status(Status.NOT_FOUND)
+        .entity(new CrimeServiceStatus(operation, "error", "Crime with given UUID '" + uuid + "' does not exist"))
+        .build();
+  }
+
+  private Response error(String operation, String errorMessage) {
+    return Response.status(Status.INTERNAL_SERVER_ERROR)
+        .entity(new CrimeServiceStatus(operation, "error", errorMessage))
+        .build();
   }
   
   @GET
@@ -92,23 +139,10 @@ public class CrimeService {
     try (DBCursor cursor = collection.find()) {
       while (cursor.hasNext()) {
         DBObject res = cursor.next();
-        list.add(buildCrime(res));
+        list.add(Crime.fromDBObject(res));
       }
     }
     
     return list;
-  }
-
-  Crime buildCrime(DBObject res) {
-    Crime crime = new Crime();
-    crime.id = UUID.fromString(res.get("id").toString());
-    crime.title = res.get("title").toString();
-    try {
-      crime.date = dateFormat.parse(res.get("date").toString());
-    } catch (ParseException e) {
-      // ignore (?)
-    }
-    crime.solved = (Boolean) res.get("solved");
-    return crime;
   }
 }
