@@ -49,11 +49,19 @@ public class SimpleAuthFilter implements Filter {
 
     HttpServletResponse resp = (HttpServletResponse) response;
     HttpServletRequest req = (HttpServletRequest) request;
-    if (allowUnsecureAccess || request.isSecure()) {
-      checkAuth(req, resp, chain);
-    } else {
-      resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-      resp.setHeader("Location", req.getRequestURL().toString().replace("http://", "https://"));
+    switch (req.getMethod()) {
+      case "GET":
+      case "HEAD":
+        chain.doFilter(request, response);
+        break;
+      default:
+        if (allowUnsecureAccess || request.isSecure()) {
+          checkAuth(req, resp, chain);
+          break;
+        }
+        
+        resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+        resp.setHeader("Location", req.getRequestURL().toString().replace("http://", "https://"));
     }
   }
 
