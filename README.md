@@ -1,5 +1,5 @@
-the whole site is password protected guarded by SimpleAuthFilter
-username and password are hardcoded but hashed with sha-256
+The whole site is password protected guarded by SimpleAuthFilter - only GET and HEAD operations are open to everyone.
+Username and password are hardcoded but hashed with sha-256
 
 The OpenShift `jbossews` cartridge documentation can be found at:
 
