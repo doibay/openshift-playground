@@ -3,9 +3,6 @@ package com.bielu.oshift.servlet;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,7 +12,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.resteasy.util.Base64;
@@ -51,24 +47,8 @@ public class SimpleAuthFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
       throws IOException, ServletException {
 
+    HttpServletRequest req = (HttpServletRequest) request;
     HttpServletResponse resp = (HttpServletResponse) response;
-    HttpServletRequest req = new HttpServletRequestWrapper((HttpServletRequest) request) {
-      @Override
-      public String getHeader(String name) {
-        if ("accept".equalsIgnoreCase(name)) {
-          return super.getHeader(name).replace("text/html", "text/xml").replace("text/plain", "text/xml");
-        }
-        return super.getHeader(name);
-      }
-      
-      @Override
-      public Enumeration<String> getHeaders(String name) {
-        if ("accept".equalsIgnoreCase(name)) {
-          return Collections.enumeration(Arrays.asList(getHeader(name)));
-        }
-        return super.getHeaders(name);
-      }
-    };
     
     switch (req.getMethod()) {
       case "GET":
