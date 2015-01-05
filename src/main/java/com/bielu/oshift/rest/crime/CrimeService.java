@@ -26,8 +26,8 @@ import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 
 @Path("crime")
-@Produces({"application/xml", "application/xml+fastinfoset", "application/x+protobuf"})
-@Consumes({"application/xml", "application/xml+fastinfoset", "application/x+protobuf"})
+@Produces({"application/xml", "application/xml+fastinfoset", "application/x-protobuf"})
+@Consumes({"application/xml", "application/xml+fastinfoset", "application/x-protobuf"})
 public class CrimeService {
   
   DBCollection collection;
