@@ -102,6 +102,12 @@ public class CrimeService {
       return error("update", e.toString());
     }
   }
+  
+  @POST
+  @Path("/sync")
+  public Response syncCrimes(List<Crime> crimeList) {
+    return Response.ok().build();
+  }
 
   @PUT
   public Response addCrime(Crime crime) {
@@ -125,18 +131,6 @@ public class CrimeService {
     }
   }
   
-  private Response notFound(String operation, String uuid) {
-    return Response.status(Status.NOT_FOUND)
-        .entity(new CrimeServiceStatus(operation, "error", "Crime with given UUID '" + uuid + "' does not exist"))
-        .build();
-  }
-
-  private Response error(String operation, String errorMessage) {
-    return Response.status(Status.INTERNAL_SERVER_ERROR)
-        .entity(new CrimeServiceStatus(operation, "error", errorMessage))
-        .build();
-  }
-  
   @GET
   public List<Crime> getCrimeList() {
     List<Crime> list = new ArrayList<>();
@@ -148,5 +142,17 @@ public class CrimeService {
     }
     
     return list;
+  }
+  
+  private Response notFound(String operation, String uuid) {
+    return Response.status(Status.NOT_FOUND)
+        .entity(new CrimeServiceStatus(operation, "error", "Crime with given UUID '" + uuid + "' does not exist"))
+        .build();
+  }
+  
+  private Response error(String operation, String errorMessage) {
+    return Response.status(Status.INTERNAL_SERVER_ERROR)
+        .entity(new CrimeServiceStatus(operation, "error", errorMessage))
+        .build();
   }
 }
