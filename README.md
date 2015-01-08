@@ -1,3 +1,5 @@
+TODO: store binary image data in mongodb
+
 The whole site is password protected guarded by SimpleAuthFilter - only GET and HEAD operations are open to everyone.
 Username and password are hardcoded but hashed with sha-256
 
