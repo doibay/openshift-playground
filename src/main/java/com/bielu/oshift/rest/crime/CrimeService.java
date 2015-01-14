@@ -2,7 +2,9 @@ package com.bielu.oshift.rest.crime;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
@@ -14,8 +16,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.xml.namespace.QName;
 
 import com.bielu.oshift.Utils;
 import com.mongodb.BasicDBObject;
@@ -28,8 +30,8 @@ import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 
 @Path("crime")
-@Produces({"application/xml", "application/xml+fastinfoset", "application/x-protobuf"})
-@Consumes({"application/xml", "application/xml+fastinfoset", "application/x-protobuf"})
+@Produces({"application/json", "application/xml", "application/xml+fastinfoset", "application/x-protobuf"})
+@Consumes({"application/json", "application/xml", "application/xml+fastinfoset", "application/x-protobuf"})
 public class CrimeService {
   
   Logger logger = Logger.getLogger(this.getClass().getSimpleName());
@@ -133,13 +135,13 @@ public class CrimeService {
     for (Crime crime : dbCrimes) {
       if (crimeList.contains(crime) == false) {
         toRemove.add(crime);
-      } else {
-        toUpdate.add(crime);
       }
     }
     
     for (Crime crime : crimeList) {
-      if (dbCrimes.contains(crime) == false) {
+      if (dbCrimes.contains(crime)) {
+        toUpdate.add(crime);
+      } else {
         toAdd.add(crime);
       }
     }
@@ -176,15 +178,14 @@ public class CrimeService {
       }
     }
     
-    ResponseBuilder response = Response.ok();
-    if (errors > 0) {
-      response.entity(new BasicDBObject("inserts", inserts)
-        .append("updates", updates)
-        .append("removals", removals)
-        .append("errors", errors));
-    }
-    
-    return response.build();
+    Map<QName, String> resMap = new HashMap<>();
+    resMap.put(new QName("inserts"), "" + inserts);
+    resMap.put(new QName("updates"), "" + updates);
+    resMap.put(new QName("removals"), "" + removals);
+    resMap.put(new QName("errors"), "" + errors);
+    return Response.ok()
+        .entity(new CrimeServiceStatus("sync", "success", resMap))
+        .build();
   }
   
   WriteResult addCrime0(Crime crime) throws MongoException {
