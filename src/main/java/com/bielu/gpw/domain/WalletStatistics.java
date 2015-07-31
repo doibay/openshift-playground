@@ -15,10 +15,10 @@ import com.bielu.gpw.Util;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WalletStatistics {
   
-  List<ShareStatistics> shareList;
-  @XmlAttribute BigDecimal initialValue;
-  @XmlAttribute BigDecimal currentValueNet;
-  @XmlAttribute BigDecimal currentProfitNet;
+  List<ShareStatistics> share;
+  @XmlAttribute BigDecimal initValue;
+  @XmlAttribute BigDecimal valueNet;
+  @XmlAttribute BigDecimal profitNet;
   
   public WalletStatistics() {
   }
@@ -28,13 +28,13 @@ public class WalletStatistics {
       return;
     }
     
-    shareList = new ArrayList<>(initialWallet.size());
+    share = new ArrayList<>(initialWallet.size());
     for (int i = 0; i < initialWallet.size(); i++) {
-      shareList.add(new ShareStatistics(initialWallet.getShareInfo(i), currentWallet.getShareInfo(i)));
+      share.add(new ShareStatistics(initialWallet.getShareInfo(i), currentWallet.getShareInfo(i)));
     }
     
-    initialValue = initialWallet.value();
-    currentValueNet = currentWallet.netValue();
-    currentProfitNet = currentValueNet.subtract(initialValue).multiply(Util.NET_PROFIT_RATE);
+    initValue = initialWallet.value();
+    valueNet = currentWallet.netValue();
+    profitNet = valueNet.subtract(initValue).multiply(Util.NET_PROFIT_RATE);
   }
 }

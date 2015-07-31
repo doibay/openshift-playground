@@ -14,22 +14,22 @@ import com.bielu.gpw.Util;
 public class ShareStatistics {
   
   @XmlAttribute String name;
-  @XmlAttribute BigDecimal initialQuote;
-  @XmlAttribute BigDecimal currentQuote;  
-  @XmlAttribute BigDecimal initialValue;
-  @XmlAttribute BigDecimal currentValueNet;
-  @XmlAttribute BigDecimal currentProfitNet;
+  @XmlAttribute BigDecimal initQuote;
+  @XmlAttribute BigDecimal quote;  
+  @XmlAttribute BigDecimal initValue;
+  @XmlAttribute BigDecimal valueNet;
+  @XmlAttribute BigDecimal profitNet;
 
   public ShareStatistics() {
   }
 
   public ShareStatistics(ShareInfo initialShare, ShareInfo currentShare) {
     name = initialShare.getName();
-    initialValue = initialShare.value();
-    currentValueNet = currentShare.netValue();
-    currentProfitNet = currentValueNet.subtract(initialValue).multiply(Util.NET_PROFIT_RATE);
-    currentQuote = currentShare.getQuote();
-    initialQuote = initialShare.getQuote();
+    initValue = initialShare.value();
+    valueNet = currentShare.netValue();
+    profitNet = valueNet.subtract(initValue).multiply(Util.NET_PROFIT_RATE);
+    quote = currentShare.getQuote();
+    initQuote = initialShare.getQuote();
   }
 
 }
