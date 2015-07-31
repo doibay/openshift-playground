@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import com.bielu.gpw.Util;
 import com.bielu.gpw.domain.Wallet;
@@ -21,7 +21,7 @@ public class GpwWalletService {
   
   Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
-  @Resource
+  @Context
   private ServletContext context;
   
   @GET

@@ -38,13 +38,13 @@ public final class Configuration {
   private Configuration() {
     config = new XMLConfiguration();
     try {
-      URL url = Class.class.getResource(CONFIGURATION_FILE);
+      URL url = Thread.currentThread().getContextClassLoader().getResource(CONFIGURATION_FILE);
       if (url == null) {
         LOG.error(String.format("Unable to locate %s file with configuration", CONFIGURATION_FILE));
         throw new IllegalStateException(
             String.format("Unable to locate %s file with configuration", CONFIGURATION_FILE));
       }
-      config.load(Class.class.getResourceAsStream(CONFIGURATION_FILE));
+      config.load(url.openStream());
       config.setExpressionEngine(new XPathExpressionEngine());
     } catch (Exception e) {
       throw new IllegalStateException("Unable to initialize configuration", e);
