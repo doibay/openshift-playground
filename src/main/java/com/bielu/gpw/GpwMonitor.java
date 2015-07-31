@@ -92,12 +92,8 @@ public class GpwMonitor implements Closeable {
   }
 
   private InputStream findDb() throws FileNotFoundException {
-    InputStream stream = Class.class.getResourceAsStream(SHARES_DB_FILE);
-    if (stream == null) {
-      String file = System.getProperty("user.dir") + SHARES_DB_FILE;
-      stream = new FileInputStream(file);
-      dbFile = new File(file);
-    }
+    FileInputStream stream = new FileInputStream(SHARES_DB_FILE);
+    dbFile = new File(SHARES_DB_FILE);
     return stream;
   }
 
