@@ -23,6 +23,17 @@ public class ShareInfo implements Comparable<ShareInfo>, Investment {
   private final Date startDate;
   private final ShareTypeEnum shareType;
 
+  public ShareInfo() {
+    name = "";
+    quote = BigDecimal.ZERO;
+    value = BigDecimal.ZERO;
+    netValue = BigDecimal.ZERO;
+    sharesCount = BigDecimal.ZERO;;
+    error = "";
+    startDate = new Date();
+    shareType = ShareTypeEnum.SHARE;
+  }
+  
   public static ShareInfo newErrorInstance(ShareInfo original, String error) {
     ShareBuilder builder = new ShareBuilder();
     builder.name = original.name;

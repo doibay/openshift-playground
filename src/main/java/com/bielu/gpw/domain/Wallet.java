@@ -23,6 +23,14 @@ public class Wallet implements Comparable<Wallet>, Investment {
   private final BigDecimal value;
   private final BigDecimal netValue;
   private final Date startDate;
+  
+  public Wallet() {
+    shareInfoList = Collections.emptyList();
+    shareNameSet = Collections.emptySet();
+    value = BigDecimal.ZERO;
+    netValue = BigDecimal.ZERO;
+    startDate = new Date();
+  }
 
   public Wallet(List<ShareInfo> shareInfoList) {
     this.shareInfoList = Collections.unmodifiableList(shareInfoList);
