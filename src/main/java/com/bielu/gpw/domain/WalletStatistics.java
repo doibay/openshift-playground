@@ -1,6 +1,5 @@
 package com.bielu.gpw.domain;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +12,12 @@ import com.bielu.gpw.Util;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class WalletStatistics {
+public class WalletStatistics extends AbstractStatistics {
   
   List<ShareStatistics> share;
-  @XmlAttribute BigDecimal initValue;
-  @XmlAttribute BigDecimal valueNet;
-  @XmlAttribute BigDecimal profitNet;
+  @XmlAttribute String initValue;
+  @XmlAttribute String valueNet;
+  @XmlAttribute String profitNet;
   
   public WalletStatistics() {
   }
@@ -33,8 +32,8 @@ public class WalletStatistics {
       share.add(new ShareStatistics(initialWallet.getShareInfo(i), currentWallet.getShareInfo(i)));
     }
     
-    initValue = initialWallet.value();
-    valueNet = currentWallet.netValue();
-    profitNet = valueNet.subtract(initValue).multiply(Util.NET_PROFIT_RATE);
+    initValue = format(initialWallet.value());
+    valueNet = format(currentWallet.netValue());
+    profitNet = format(currentWallet.netValue().subtract(initialWallet.value()).multiply(Util.NET_PROFIT_RATE));
   }
 }
