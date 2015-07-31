@@ -5,8 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bielu.gpw.Util;
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ShareStatistics extends AbstractStatistics {
@@ -25,7 +23,7 @@ public class ShareStatistics extends AbstractStatistics {
     name = initialShare.getName();
     initValue = format(initialShare.value());
     valueNet = format(currentShare.netValue());
-    profitNet = format(currentShare.netValue().subtract(initialShare.value()).multiply(Util.NET_PROFIT_RATE));
+    profitNet = format(currentShare.netValue().subtract(initialShare.value()));
     quote = format(currentShare.getQuote());
     initQuote = format(initialShare.getQuote());
   }

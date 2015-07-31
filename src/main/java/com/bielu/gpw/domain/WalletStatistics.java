@@ -8,8 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.bielu.gpw.Util;
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WalletStatistics extends AbstractStatistics {
@@ -34,6 +32,6 @@ public class WalletStatistics extends AbstractStatistics {
     
     initValue = format(initialWallet.value());
     valueNet = format(currentWallet.netValue());
-    profitNet = format(currentWallet.netValue().subtract(initialWallet.value()).multiply(Util.NET_PROFIT_RATE));
+    profitNet = format(currentWallet.netValue().subtract(initialWallet.value()));
   }
 }
