@@ -18,6 +18,7 @@ public class WalletStatistics extends AbstractStatistics {
   @XmlAttribute String initValue;
   @XmlAttribute String valueNet;
   @XmlAttribute String profitNet;
+  @XmlAttribute String profitNetTaxed;
   
   public WalletStatistics() {
   }
@@ -34,6 +35,7 @@ public class WalletStatistics extends AbstractStatistics {
     
     initValue = format(initialWallet.value());
     valueNet = format(currentWallet.netValue());
-    profitNet = format(currentWallet.netValue().subtract(initialWallet.value()).multiply(Util.NET_PROFIT_RATE));
+    profitNet = format(currentWallet.netValue().subtract(initialWallet.value()));
+    profitNetTaxed = format(currentWallet.netValue().subtract(initialWallet.value()).multiply(Util.NET_PROFIT_RATE));
   }
 }
