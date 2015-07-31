@@ -23,7 +23,7 @@ import com.bielu.gpw.domain.Wallet;
 
 public class GpwMonitor implements Closeable {
 
-  private static final String SHARES_DB_FILE = System.getProperty("java.io.tmpdir") + "/shares.db";
+  private static final String SHARES_DB_FILE = "/tmp/shares.db";
   private static final Log LOG = LogFactory.getLog(GpwMonitor.class);
   private final ScheduledExecutorService service;
   private final SimpleDateFormat format;
