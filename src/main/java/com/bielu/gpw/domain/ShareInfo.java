@@ -4,14 +4,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.bielu.gpw.Util;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class ShareInfo implements Comparable<ShareInfo>, Investment {
 
   private final String name;
@@ -23,17 +17,6 @@ public class ShareInfo implements Comparable<ShareInfo>, Investment {
   private final Date startDate;
   private final ShareTypeEnum shareType;
 
-  public ShareInfo() {
-    name = "";
-    quote = BigDecimal.ZERO;
-    value = BigDecimal.ZERO;
-    netValue = BigDecimal.ZERO;
-    sharesCount = BigDecimal.ZERO;;
-    error = "";
-    startDate = new Date();
-    shareType = ShareTypeEnum.SHARE;
-  }
-  
   public static ShareInfo newErrorInstance(ShareInfo original, String error) {
     ShareBuilder builder = new ShareBuilder();
     builder.name = original.name;

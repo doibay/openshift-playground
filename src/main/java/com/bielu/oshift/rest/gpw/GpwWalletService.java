@@ -1,7 +1,5 @@
 package com.bielu.oshift.rest.gpw;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
@@ -13,6 +11,7 @@ import javax.ws.rs.core.Context;
 
 import com.bielu.gpw.Util;
 import com.bielu.gpw.domain.Wallet;
+import com.bielu.gpw.domain.WalletStatistics;
 
 @Path("gpwWallet")
 @Produces({"application/json", "application/xml"})
@@ -25,15 +24,8 @@ public class GpwWalletService {
   private ServletContext context;
   
   @GET
-  public Map<String, Wallet> getWallet() {
-    Map<String, Wallet> result = new HashMap<>();
-    if (context == null) {
-      logger.warning("ServletContext is null");
-      return result;
-    }
-    
-    result.put("INITIAL", (Wallet) context.getAttribute(Util.INITIAL_WALLET));
-    result.put("CURRENT", (Wallet) context.getAttribute(Util.CURRENT_WALLET));
-    return result;
+  public WalletStatistics getWallet() {
+    return new WalletStatistics((Wallet) context.getAttribute(Util.INITIAL_WALLET),
+                                (Wallet) context.getAttribute(Util.CURRENT_WALLET));
   }
 }

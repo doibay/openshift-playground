@@ -8,14 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import com.bielu.gpw.Util;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Wallet implements Comparable<Wallet>, Investment {
 
   private final List<ShareInfo> shareInfoList;
@@ -24,14 +18,6 @@ public class Wallet implements Comparable<Wallet>, Investment {
   private final BigDecimal netValue;
   private final Date startDate;
   
-  public Wallet() {
-    shareInfoList = Collections.emptyList();
-    shareNameSet = Collections.emptySet();
-    value = BigDecimal.ZERO;
-    netValue = BigDecimal.ZERO;
-    startDate = new Date();
-  }
-
   public Wallet(List<ShareInfo> shareInfoList) {
     this.shareInfoList = Collections.unmodifiableList(shareInfoList);
 
