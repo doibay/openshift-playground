@@ -23,7 +23,7 @@ public class ShareStatistics extends AbstractStatistics {
     name = initialShare.getName();
     initValue = format(initialShare.value());
     valueNet = format(currentShare.netValue());
-    profitNet = format(currentShare.netValue().subtract(initialShare.value()));
+    profitNet = format(currentShare.netValue().subtract(initialShare.netValue()));
     quote = format(currentShare.getQuote());
     initQuote = format(initialShare.getQuote());
   }

@@ -1,5 +1,6 @@
 package com.bielu.gpw.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class WalletStatistics extends AbstractStatistics {
     
     initValue = format(initialWallet.value());
     valueNet = format(currentWallet.netValue());
-    profitNet = format(currentWallet.netValue().subtract(initialWallet.value()));
-    profitNetTaxed = format(currentWallet.netValue().subtract(initialWallet.value()).multiply(Util.NET_PROFIT_RATE));
+    BigDecimal profitNet = currentWallet.netValue().subtract(initialWallet.netValue());
+    this.profitNet = format(profitNet);
+    profitNetTaxed = format(profitNet.multiply(Util.NET_PROFIT_RATE));
   }
 }
