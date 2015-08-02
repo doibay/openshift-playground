@@ -2,9 +2,13 @@ package com.bielu.gpw;
 
 import static java.math.MathContext.DECIMAL128;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.commons.io.IOUtils;
 
 import com.bielu.gpw.domain.Investment;
 import com.bielu.gpw.domain.Wallet;
@@ -123,6 +127,10 @@ public final class Util {
     }
 
     return notify;
+  }
+  
+  public static String fileToString(String fileName) throws IOException {
+    return IOUtils.toString(new FileInputStream(fileName));
   }
 
   private Util() {

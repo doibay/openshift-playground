@@ -2,6 +2,7 @@ package com.bielu.gpw.task;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -72,10 +73,18 @@ public class ShareQuoteReader implements Runnable {
     }
     return new Wallet(result);
   }
-  
+
   private String readUrl(String url) throws IOException {
     LOG.info("Reading: " + url);
-    String content = IOUtils.toString(new URL(url).openStream());
+    URLConnection conn = new URL(url).openConnection();
+    conn.setReadTimeout(5000);
+    String content;
+    try {
+      content = IOUtils.toString(conn.getInputStream());
+    } catch (IOException e) {
+      LOG.error("Unable to read: " + url, e);
+      content = "";
+    }
     LOG.info("Content length: " + content.length() / 1024 + " KB");
     return content;
   }
@@ -90,7 +99,7 @@ public class ShareQuoteReader implements Runnable {
         for (int i = 0; i < TWO; i++) {
           tmpIdx = quotesPage.indexOf(SHARE_QUOTE_DELIM, tmpIdx + 1);
         }
-        
+
         int quoteIdx = tmpIdx + SHARE_QUOTE_DELIM.length();
         int quoteEndIdx = quotesPage.indexOf("<", quoteIdx);
         double quote = Double.parseDouble(escapeHtml(quotesPage.substring(quoteIdx, quoteEndIdx)));
@@ -99,14 +108,14 @@ public class ShareQuoteReader implements Runnable {
     } catch (RuntimeException e) {
       LOG.info(String.format("Share reference quotes [%s] not found", share.getName()));
     }
-      
+
     try {
       if (idx > -1) {
         // get the current quote (present only if market is open)
         for (int i = 0; i < FIVE; i++) {
           tmpIdx = quotesPage.indexOf(SHARE_QUOTE_DELIM, tmpIdx + 1);
         }
-        
+
         int quoteIdx = tmpIdx + SHARE_QUOTE_DELIM.length();
         int quoteEndIdx = quotesPage.indexOf("<", quoteIdx);
         double quote = Double.parseDouble(escapeHtml(quotesPage.substring(quoteIdx, quoteEndIdx)));
@@ -115,10 +124,10 @@ public class ShareQuoteReader implements Runnable {
     } catch (RuntimeException e) {
       if (shareInfo == null) {
         LOG.warn(String.format("Share quotes [%s] not found", share.getName()), e);
-        shareInfo = ShareInfo.newErrorInstance(share, "Could not retrieve share quotes"); 
+        shareInfo = ShareInfo.newErrorInstance(share, "Could not retrieve share quotes");
       }
     }
-    
+
     if (shareInfo != null) {
       return shareInfo;
     }
@@ -134,7 +143,7 @@ public class ShareQuoteReader implements Runnable {
     try {
       if (idx > -1) {
         tmpIdx = quotesPage.indexOf(FUND_QUOTE_DELIM, tmpIdx + 1);
-        
+
         int quoteIdx = tmpIdx + FUND_QUOTE_DELIM.length();
         int quoteEndIdx = quotesPage.indexOf("\";", quoteIdx);
         double quote = Double.parseDouble(escapeHtml(quotesPage.substring(quoteIdx, quoteEndIdx)));
@@ -143,20 +152,19 @@ public class ShareQuoteReader implements Runnable {
     } catch (RuntimeException e) {
       if (shareInfo == null) {
         LOG.warn(String.format("Fund quotes [%s] not found", share.getName()), e);
-        shareInfo = ShareInfo.newErrorInstance(share, "Could not retrieve fund quotes"); 
+        shareInfo = ShareInfo.newErrorInstance(share, "Could not retrieve fund quotes");
       }
     }
 
     if (shareInfo != null) {
       return shareInfo;
     }
-    
+
     LOG.warn(String.format("Fund quotes [%s] not found", share.getName()));
     return ShareInfo.newErrorInstance(share, "Could not retrieve fund quotes");
   }
-  
+
   private String escapeHtml(String html) {
-    return html.replace(",", ".")
-               .replace("&nbsp;", "");
+    return html.replace(",", ".").replace("&nbsp;", "");
   }
 }
