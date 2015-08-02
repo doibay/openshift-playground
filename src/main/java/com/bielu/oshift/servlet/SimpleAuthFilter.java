@@ -67,7 +67,7 @@ public class SimpleAuthFilter implements Filter {
   }
 
   void checkAuth(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-    if (allowAnonymousAccess || verifyUserAndPass(req) || "/gpw.jsp".equals(req.getRequestURI())) {
+    if (allowAnonymousAccess || verifyUserAndPass(req) || "/sharesDb".equals(req.getRequestURI())) {
       chain.doFilter(req, resp);
     } else {
       resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Request must be authenticated with username and password");
