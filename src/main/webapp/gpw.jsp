@@ -8,7 +8,7 @@
 </head>
 <body>
 <form action="sharesDb" method="post">
-<textarea width="100%" height="200px">
+<textarea name="content" style="width: 100%; height: 300px; font-style: Consolas; font-size: 8pt;">
 <%
 out.print(Util.fileToString(GpwMonitor.SHARES_DB_FILE));
 %>

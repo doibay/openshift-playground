@@ -3,6 +3,7 @@ package com.bielu.gpw;
 import static java.math.MathContext.DECIMAL128;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -131,6 +132,12 @@ public final class Util {
   
   public static String fileToString(String fileName) throws IOException {
     return IOUtils.toString(new FileInputStream(fileName));
+  }
+
+  public static void writeToFile(String content, String fileName) throws IOException {
+    FileOutputStream out = new FileOutputStream(fileName);
+    out.write(content.getBytes());
+    out.close();
   }
 
   private Util() {
