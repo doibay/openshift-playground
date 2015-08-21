@@ -31,7 +31,6 @@ public final class GpwServletContextListener implements ServletContextListener {
   private static final Log LOG = LogFactory.getLog(GpwServletContextListener.class);
 
   private GpwMonitor gpwMon;
-  private long lastModification;
   private Timer timer;
 
   @Override
@@ -43,18 +42,17 @@ public final class GpwServletContextListener implements ServletContextListener {
   @Override
   public void contextInitialized(final ServletContextEvent sce) {
     gpwMon = initialize(sce.getServletContext());
-    lastModification = gpwMon.getLastDbModification();
     if (gpwMon == null) {
       return;
     }
+    gpwMon.hasDbChanged();
 
     timer = new Timer("Shares DB Modification Monitor");
     TimerTask task = new TimerTask() {
       @Override
       public void run() {
-        if (lastModification < gpwMon.getLastDbModification()) {
+        if (gpwMon.hasDbChanged()) {
           gpwMon = initialize(sce.getServletContext());
-          lastModification = gpwMon.getLastDbModification();
           if (gpwMon == null) {
             cancel();
           }

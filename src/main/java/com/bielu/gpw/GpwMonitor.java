@@ -1,17 +1,21 @@
 package com.bielu.gpw;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,12 +27,13 @@ import com.bielu.gpw.domain.Wallet;
 
 public class GpwMonitor implements Closeable {
 
-  public static final String SHARES_DB_FILE = File.separator + "tmp" + File.separator + "shares.db";
+  private static final String SHARES_DB_URL = "https://raw.githubusercontent.com/pbielicki/gpw-simulator/master/shares.db";
+  private static final String SHARES_DB_META_URL = "https://api.github.com/repos/pbielicki/gpw-simulator/contents/shares.db";
   private static final Log LOG = LogFactory.getLog(GpwMonitor.class);
   private final ScheduledExecutorService service;
   private final SimpleDateFormat format;
-  private File dbFile;
   private boolean exiting = false;
+  private static String dbSha = "";
 
   protected GpwMonitor() {
     service = Executors.newScheduledThreadPool(2, new GpwThreadFactory("GpwMonitor"));
@@ -91,17 +96,28 @@ public class GpwMonitor implements Closeable {
     }
   }
 
-  private InputStream findDb() throws FileNotFoundException {
-    FileInputStream stream = new FileInputStream(SHARES_DB_FILE);
-    dbFile = new File(SHARES_DB_FILE);
-    return stream;
+  private InputStream findDb() throws IOException {
+    URLConnection conn = new URL(SHARES_DB_URL).openConnection();
+    conn.setReadTimeout(5000);
+    return conn.getInputStream();
   }
 
-  public long getLastDbModification() {
-    if (dbFile == null) {
-      return 0;
+  public boolean hasDbChanged() {
+    try {
+      URLConnection conn = new URL(SHARES_DB_META_URL).openConnection();
+      conn.setReadTimeout(5000);
+      JsonReader reader = Json.createReader(conn.getInputStream());
+      JsonObject jsonObj = reader.readObject();
+      reader.close();
+      String sha = jsonObj.getString("sha");
+      if (sha.equalsIgnoreCase(dbSha) == false) {
+        dbSha = sha;
+        return true;
+      }
+    } catch (Exception e) {
+      LOG.error("Could not retrieve shares.db", e);
     }
-    return dbFile.lastModified();
+    return false;
   }
 
   public void scheduleAtFixedRate(Runnable command, long initDelay, int period, TimeUnit unit) {
