@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bielu.gpw.Util;
 
-@XmlRootElement(name = "s")
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ShareStatistics extends AbstractStatistics {
   
@@ -19,7 +19,7 @@ public class ShareStatistics extends AbstractStatistics {
   @XmlAttribute(name = "iv") String initValue;
   @XmlAttribute(name = "vnet") String valueNet;
   @XmlAttribute(name = "pnet") String profitNet;
-  @XmlAttribute(name = "pnettaxed") String profitNetTaxed;
+  @XmlAttribute(name = "ptaxed") String profitNetTaxed;
 
   public ShareStatistics() {
   }
