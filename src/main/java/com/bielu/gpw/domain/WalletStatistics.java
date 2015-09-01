@@ -38,6 +38,10 @@ public class WalletStatistics extends AbstractStatistics {
     valueNet = format(currentWallet.netValue());
     BigDecimal profitNet = currentWallet.netValue().subtract(initialWallet.netValue());
     this.profitNet = format(profitNet);
-    profitNetTaxed = format(profitNet.multiply(Util.NET_PROFIT_RATE));
+    if (profitNet.intValue() > 0) {
+      profitNetTaxed = format(profitNet.multiply(Util.NET_PROFIT_RATE));
+    } else {
+      profitNetTaxed = format(profitNet);
+    }
   }
 }
