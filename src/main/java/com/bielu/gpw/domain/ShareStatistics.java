@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bielu.gpw.Util;
 
-@XmlRootElement
+@XmlRootElement(name = "s")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ShareStatistics extends AbstractStatistics {
   

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bielu.gpw.Util;
@@ -16,7 +16,7 @@ import com.bielu.gpw.Util;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WalletStatistics extends AbstractStatistics {
   
-  @XmlElementRef(name = "s") List<ShareStatistics> share;
+  @XmlElement(name = "s") List<ShareStatistics> share;
   @XmlAttribute(name = "iv") String initValue;
   @XmlAttribute(name = "vnet") String valueNet;
   @XmlAttribute(name = "pnet") String profitNet;
