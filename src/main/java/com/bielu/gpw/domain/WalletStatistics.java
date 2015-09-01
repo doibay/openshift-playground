@@ -11,15 +11,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.bielu.gpw.Util;
 
-@XmlRootElement
+@XmlRootElement(name = "wallet")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WalletStatistics extends AbstractStatistics {
   
   List<ShareStatistics> share;
-  @XmlAttribute String initValue;
-  @XmlAttribute String valueNet;
-  @XmlAttribute String profitNet;
-  @XmlAttribute String profitNetTaxed;
+  @XmlAttribute(name = "iv") String initValue;
+  @XmlAttribute(name = "vnet") String valueNet;
+  @XmlAttribute(name = "pnet") String profitNet;
+  @XmlAttribute(name = "pnettaxed") String profitNetTaxed;
   
   public WalletStatistics() {
   }
