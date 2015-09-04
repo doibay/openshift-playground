@@ -9,16 +9,11 @@ import com.bielu.gpw.Util;
 
 public abstract class AbstractStatistics {
 
-  @XmlAttribute(name = "iv")
-  String initValue;
-  @XmlAttribute(name = "vnet")
-  String valueNet;
-  @XmlAttribute(name = "pnet")
-  String profitNet;
-  @XmlAttribute(name = "ptaxed")
-  String profitNetTaxed;
-  @XmlAttribute(name = "r")
-  String rate;
+  @XmlAttribute(name = "iv") String initValue;
+  @XmlAttribute(name = "vnet") String valueNet;
+  @XmlAttribute(name = "pnet") String profitNet;
+  @XmlAttribute(name = "ptaxed") String profitNetTaxed;
+  @XmlAttribute(name = "r") String rate;
 
   public AbstractStatistics() {
   }

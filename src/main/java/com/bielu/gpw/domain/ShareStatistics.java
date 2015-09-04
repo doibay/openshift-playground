@@ -10,8 +10,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ShareStatistics extends AbstractStatistics {
   
   @XmlAttribute(name = "n") String name;
-  @XmlAttribute(name = "q") String quote;
   @XmlAttribute(name = "iq") String initQuote;
+  @XmlAttribute(name = "q") String quote;
 
   public ShareStatistics() {
   }
