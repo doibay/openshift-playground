@@ -1,6 +1,7 @@
 package com.bielu.gpw.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
@@ -37,7 +38,7 @@ public abstract class AbstractStatistics {
       profitNetTaxed = format(profitNet);
     }
 
-    rate = format(profitNet.divide(current.netValue()).multiply(BigDecimal.valueOf(100))) + "%";
+    rate = format(profitNet.divide(current.netValue(), RoundingMode.FLOOR).multiply(BigDecimal.valueOf(100))) + "%";
   }
 
   protected String format(BigDecimal value) {
