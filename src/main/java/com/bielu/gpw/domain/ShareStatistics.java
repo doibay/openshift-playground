@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ShareStatistics extends AbstractStatistics {
   
   @XmlAttribute(name = "n") String name;
+  @XmlAttribute(name = "c") String count;
   @XmlAttribute(name = "iq") String initQuote;
   @XmlAttribute(name = "q") String quote;
 
@@ -19,6 +20,7 @@ public class ShareStatistics extends AbstractStatistics {
   public ShareStatistics(ShareInfo initialShare, ShareInfo currentShare) {
     super(initialShare, currentShare);
     name = initialShare.getName();
+    count = format(currentShare.getCount());
     quote = format(currentShare.getQuote());
     initQuote = format(initialShare.getQuote());
   }
