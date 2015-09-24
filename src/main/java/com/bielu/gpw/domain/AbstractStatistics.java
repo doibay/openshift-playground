@@ -25,7 +25,7 @@ public abstract class AbstractStatistics {
 
     initValue = format(initial.value());
     valueNet = format(current.netValue());
-    BigDecimal profitNet = current.netValue().subtract(initial.netValue());
+    BigDecimal profitNet = current.netValue().subtract(initial.value());
     this.profitNet = format(profitNet);
     if (profitNet.intValue() > 0) {
       profitNetTaxed = format(profitNet.multiply(Util.NET_PROFIT_RATE));
